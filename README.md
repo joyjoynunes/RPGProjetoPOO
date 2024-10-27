@@ -1,4 +1,4 @@
-Integrantes do Grupo: Benafle Soares da Hora, Gabriela Fernandes Silva e Joyce Nunes
+Integrantes do Grupo: Gabriela Fernandes Silva e Joyce Nunes
 
 Link do Repositório: https://github.com/joyjoynunes/RPGProjetoPOO/tree/main
 
