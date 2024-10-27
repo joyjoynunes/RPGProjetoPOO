@@ -1,0 +1,208 @@
+import java.util.ArrayList;
+
+// Classe abstrata Entidade - Define as características dos personagens no jogo
+abstract class Entidade {
+    private String nome;
+    private int pontosVida;
+    private int ataqueBase;
+
+    public Entidade(String nome, int pontosVida, int ataqueBase) {
+        this.nome = nome;
+        this.pontosVida = pontosVida;
+        this.ataqueBase = ataqueBase;
+    }
+
+    // Encapsulamento
+    public String getNome() { return nome; }
+    public int getPontosVida() { return pontosVida; }
+    public void setPontosVida(int pontosVida) { this.pontosVida = pontosVida; }
+    public int getAtaqueBase() { return ataqueBase; }
+
+    // Método abstrato para ataque
+    public abstract void atacar(Entidade alvo);
+
+    // Verificar se a entidade está viva
+    public boolean estaViva() {
+        return pontosVida > 0;
+    }
+}
+
+// Interface HabilidadeEspecial para definir habilidades especiais
+interface HabilidadeEspecial {
+    void usarHabilidadeEspecial(Entidade alvo);
+}
+
+// Guardião da Luz - Guerreiro que pode curar e atacar
+class GuardiaoLuz extends Entidade implements HabilidadeEspecial {
+    private Inventario inventario;
+
+    public GuardiaoLuz(String nome, int pontosVida, int ataqueBase, Inventario inventario) {
+        super(nome, pontosVida, ataqueBase);
+        this.inventario = inventario;
+    }
+
+    @Override
+    public void atacar(Entidade alvo) {
+        System.out.println(getNome() + " ataca " + alvo.getNome());
+        alvo.setPontosVida(alvo.getPontosVida() - getAtaqueBase());
+    }
+
+    @Override
+    public void usarHabilidadeEspecial(Entidade alvo) {
+        System.out.println(getNome() + " usa Cura!");
+        setPontosVida(getPontosVida() + 20);
+    }
+
+    public void usarItem(String itemNome) {
+        try {
+            Item item = inventario.encontrarItem(itemNome);
+            item.usar(this);
+        } catch (Exception e) {
+            System.out.println("Item não encontrado: " + e.getMessage());
+        }
+    }
+}
+
+// Mestra dos Elementos - Pode invocar fogo, gelo e trovão
+class MestraElementos extends Entidade implements HabilidadeEspecial {
+    public MestraElementos(String nome, int pontosVida, int ataqueBase) {
+        super(nome, pontosVida, ataqueBase);
+    }
+
+    @Override
+    public void atacar(Entidade alvo) {
+        System.out.println(getNome() + " invoca uma rajada elemental em " + alvo.getNome());
+        alvo.setPontosVida(alvo.getPontosVida() - getAtaqueBase());
+    }
+
+    @Override
+    public void usarHabilidadeEspecial(Entidade alvo) {
+        System.out.println(getNome() + " lança um ataque de Fogo!");
+        alvo.setPontosVida(alvo.getPontosVida() - (getAtaqueBase() * 2));
+    }
+}
+
+// Guerreiro das Sombras - Usa habilidades sombrias
+class GuerreiroSombras extends Entidade {
+    public GuerreiroSombras(String nome, int pontosVida, int ataqueBase) {
+        super(nome, pontosVida, ataqueBase);
+    }
+
+    @Override
+    public void atacar(Entidade alvo) {
+        System.out.println(getNome() + " ataca com uma lâmina sombria " + alvo.getNome());
+        alvo.setPontosVida(alvo.getPontosVida() - getAtaqueBase());
+    }
+
+    public void ataqueSombrio(Entidade alvo) {
+        System.out.println(getNome() + " usa um ataque sombrio!");
+        alvo.setPontosVida(alvo.getPontosVida() - (getAtaqueBase() + 5));
+    }
+}
+
+// Arqueiro Celestial - Usa ataques à distância e paralisa inimigos
+class ArqueiroCelestial extends Entidade implements HabilidadeEspecial {
+    public ArqueiroCelestial(String nome, int pontosVida, int ataqueBase) {
+        super(nome, pontosVida, ataqueBase);
+    }
+
+    @Override
+    public void atacar(Entidade alvo) {
+        System.out.println(getNome() + " dispara uma flecha de luz em " + alvo.getNome());
+        alvo.setPontosVida(alvo.getPontosVida() - getAtaqueBase());
+    }
+
+    @Override
+    public void usarHabilidadeEspecial(Entidade alvo) {
+        System.out.println(getNome() + " usa uma flecha paralisante!");
+        alvo.setPontosVida(alvo.getPontosVida() - (getAtaqueBase() + 3));
+    }
+}
+
+// Mago Sombrio - Vilão com habilidades sombrias poderosas
+class MagoSombrio extends Entidade {
+    public MagoSombrio(String nome, int pontosVida, int ataqueBase) {
+        super(nome, pontosVida, ataqueBase);
+    }
+
+    @Override
+    public void atacar(Entidade alvo) {
+        System.out.println(getNome() + " lança uma magia negra em " + alvo.getNome());
+        alvo.setPontosVida(alvo.getPontosVida() - getAtaqueBase());
+    }
+
+    public void invocarCriaturaSombria() {
+        System.out.println(getNome() + " invoca uma criatura sombria para lutar ao seu lado!");
+    }
+}
+
+// Classe Inventário para armazenamento de itens
+class Inventario {
+    private ArrayList<Item> itens;
+
+    public Inventario() {
+        itens = new ArrayList<>();
+    }
+
+    public void adicionarItem(Item item) {
+        itens.add(item);
+    }
+
+    public Item encontrarItem(String nome) throws Exception {
+        for (Item item : itens) {
+            if (item.getNome().equals(nome)) {
+                return item;
+            }
+        }
+        throw new Exception("Item não encontrado no inventário");
+    }
+}
+
+// Classe Item representando itens no jogo
+class Item {
+    private String nome;
+
+    public Item(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void usar(GuardiaoLuz usuario) {
+        System.out.println(usuario.getNome() + " usa " + nome);
+        usuario.setPontosVida(usuario.getPontosVida() + 15);
+    }
+}
+
+// Classe principal para simular o jogo
+public class JogoRPG {
+    public static void main(String[] args) {
+        // Criação do inventário do guardião
+        Inventario inventario = new Inventario();
+        inventario.adicionarItem(new Item("Poção de Vida"));
+        GuardiaoLuz lunaris = new GuardiaoLuz("Lunaris", 100, 20, inventario);
+        MestraElementos nivara = new MestraElementos("Nivara", 80, 18);
+        GuerreiroSombras ragnor = new GuerreiroSombras("Ragnor", 90, 25);
+        ArqueiroCelestial theron = new ArqueiroCelestial("Theron", 75, 15);
+        MagoSombrio malakar = new MagoSombrio("Malakar", 120, 30);
+
+        // Simulação de combate entre os personagens
+        try {
+            lunaris.atacar(malakar);
+            nivara.usarHabilidadeEspecial(malakar);
+            ragnor.ataqueSombrio(malakar);
+            theron.usarHabilidadeEspecial(malakar);
+            
+            if (!malakar.estaViva()) {
+                System.out.println(malakar.getNome() + " foi derrotado!");
+            } else {
+                malakar.invocarCriaturaSombria();
+                malakar.atacar(lunaris);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro durante o combate: " + e.getMessage());
+        }
+    }
+}
