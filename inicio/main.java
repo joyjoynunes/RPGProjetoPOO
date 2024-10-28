@@ -87,10 +87,10 @@ public class main {
                 "Olhe... ele está nos levando em direção ao Castelo do Rei Haku! O dragão de Kara deve ter percebido que o seu cheiro é estranho.\n" +
                 "Bem, como eu sou desatento... Não te expliquei no que isso implica, né? Mas bem, tudo aconteceu tão rápido depois que pedi pra você se apresentar que também não tive tempo de te explicar algo.\n" +
                 "Enfim... como você é novo nesse mundo, isso significa que você não nasceu com uma raça daqui... Você só é um mero e fraco humano.\n" +
-                "Te levando até o Rei, ele te dará a opção de escolher entre 4 raças para que você possa herdar suas habilidades. Dessa forma, voce continua sendo um humano, mas com habilidade necessárias para sobrevivência nesse mundo.");
-        System.out.println("-O dragão de Kara chega ao castelo e deixa " +nomeusuario+ "e o narrador em frente ao portão que dá acesso ao hall de entrada que leva ao rei.");
+                "Te levando até o Rei, ele te dará a opção de escolher entre 4 raças para que você possa herdar suas habilidades. Dessa forma, voce continua sendo um humano, mas com habilidades necessárias para sobrevivência nesse mundo.");
+        System.out.println("-O dragão de Kara chega ao castelo e deixa " +nomeusuario+ " e o narrador em frente ao portão que dá acesso ao hall de entrada que leva ao rei.");
         System.out.println("Chegamos! Vamos, vou te levar ao Rei.");
-        System.out.println("-" + nomeusuario + "e o narrador seguem em frente até a próxima porta. Batem e em seguida ouve-se um barulho muito alto de engrenagens se movendo.");
+        System.out.println("-" + nomeusuario + " e o narrador seguem em frente até a próxima porta. Batem e em seguida ouve-se um barulho muito alto de engrenagens se movendo.");
         System.out.println("-A porta se abriu.");
         System.out.println("- O rei está sentado em seu trono ao final do que era equivalente a um corredor de pelo menos uns 20m.");
         System.out.println("Rei: Olá. O que os trazem até mim?");
@@ -175,6 +175,7 @@ public class main {
             //combate.notify();
         }
 
+        System.out.println("to be continued...");
         reader.close();
     }
 }
